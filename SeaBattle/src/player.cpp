@@ -27,7 +27,7 @@ Ship Player::initShip(size_t size, size_t num) {
   bool direction;
   std::cin >> direction;
   std::cout << "Input position (format - C1)" << std::endl;
-  Position pos;
+  std::string pos;
   std::cin >> pos;
   /*
    * there checking if input pos is correct

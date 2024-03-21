@@ -13,16 +13,23 @@ Position Position::operator+(size_t num) {
   return result;
 }
 
-std::istream& operator>>(std::istream& in, Position& pos) {
-  std::string input;
-  in >> input;
-  pos.column = static_cast<size_t>(input[0] - 'A');
-  pos.row = static_cast<size_t>(input[1] - '1');
-  /*
-   * later it will be safe of wrong-format input
-   */
-  return in;
+bool Position::is_row_char(char row) {
+  return '0' <= row && row <= '9';
 }
+bool Position::is_column_char(char row) {
+  return 'A' <= row && row <= 'J';
+}
+
+Position::Position(std::string& pos) {
+  if (pos.size() != 2 || !is_column_char(pos[0]) || !is_row_char(pos[1])) {
+    throw std::invalid_argument("invalid input");
+  }
+  column = static_cast<int>(pos[0] - 'A');
+  row = static_cast<int>(pos[1] - '0');
+}
+
+size_t Position::getRow() const { return row; }
+size_t Position::getColumn() const { return column; }
 
 Ship::Ship(size_t size, Position headPosition, bool isVertical)
     : size(size),
@@ -36,9 +43,9 @@ Ship::Ship(size_t size, Position headPosition, bool isVertical)
   }
 }
 
-size_t Ship::getRow() const { return headPosition.row; }
+size_t Ship::getRow() const { return headPosition.getRow(); }
 
-size_t Ship::getColumn() const { return headPosition.column; }
+size_t Ship::getColumn() const { return headPosition.getColumn(); }
 
 size_t Ship::getSize() const { return size; }
 

@@ -4,15 +4,21 @@
 enum class ShipState { ALIVE, DAMAGED, DESTROYED };
 enum class ShipDirection { VERTICAL, HORIZONTAL };
 
-struct Position {
+class Position {
+private:
   size_t row;
   size_t column;
+  static bool is_row_char(char row);
+  static bool is_column_char(char row);
+public:
 
+  Position(std::string& pos);
   bool operator<(const Position& other) const;
   Position operator+(size_t num);
-};
 
-std::istream& operator>>(std::istream& in, Position& pos);
+  size_t getRow() const;
+  size_t getColumn() const;
+};
 
 class Ship {
   size_t size;
